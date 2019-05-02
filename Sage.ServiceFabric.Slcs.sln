@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.ServiceFabric.Slcs", "Sage.ServiceFabric.Slcs\Sage.ServiceFabric.Slcs.csproj", "{EC8982E5-0D93-4F4A-BC44-BAA412131106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.ServiceFabric.ServiceFabric.Core", "Sage.ServiceFabric.ServiceFabric.Core\Sage.ServiceFabric.ServiceFabric.Core.csproj", "{B6F67E84-3C35-4563-98DC-F5320715BC45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC8982E5-0D93-4F4A-BC44-BAA412131106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8982E5-0D93-4F4A-BC44-BAA412131106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8982E5-0D93-4F4A-BC44-BAA412131106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8982E5-0D93-4F4A-BC44-BAA412131106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F67E84-3C35-4563-98DC-F5320715BC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F67E84-3C35-4563-98DC-F5320715BC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F67E84-3C35-4563-98DC-F5320715BC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F67E84-3C35-4563-98DC-F5320715BC45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64D4839D-8C10-48A4-B9C3-5883EF8441F3}
+	EndGlobalSection
+EndGlobal
