@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sage.ServiceFabric.ServiceFabric.Core;
 using Sage.ServiceFabric.Slcs.Services;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SumoLogic;
 
 namespace Sage.ServiceFabric.Slcs
 {
@@ -32,8 +35,10 @@ namespace Sage.ServiceFabric.Slcs
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
         {
+            //ConfigureSerilog(loggerFactory, applicationLifetime);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -46,6 +51,27 @@ namespace Sage.ServiceFabric.Slcs
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private void ConfigureSerilog(ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
+        {
+            var sumoUrl = @"https://endpoint2.collection.sumologic.com/receiver/v1/http/ZaVnC4dhaV3LWI_amXizPs4gb9vYI5KduDd0qCNPjkvgSymJlIu7NeQ7cg3sFSNl79QTEi_cvMnf6vVzUzbHc9S2oe8AMfMaR8xvupIDDnWFsicu3atcBQ==";
+
+            // Create the logger
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                .WriteTo.ColoredConsole(
+                    LogEventLevel.Information,
+                    "{NewLine}{Timestamp:HH:mm:ss} [{Level}] ({CorrelationToken}) {Message}{NewLine}{Exception}")
+                .WriteTo.Debug(LogEventLevel.Information,
+                    "{NewLine}{Timestamp:HH:mm:ss} [{Level}] ({CorrelationToken}) {Message}{NewLine}{Exception}")
+                .WriteTo.SumoLogic(sumoUrl, restrictedToMinimumLevel: LogEventLevel.Information, sourceName: "Dev-serilog-test")
+                .CreateLogger();
+
+            loggerFactory.AddSerilog();
+
+            applicationLifetime.ApplicationStarted.Register(Log.CloseAndFlush);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Sage.ServiceFabric.Slcs.Controllers
         {
             this._valuesService = valuesService;
             this._logger = logger;
+
         }
 
         // GET api/values
@@ -28,7 +29,7 @@ namespace Sage.ServiceFabric.Slcs.Controllers
         {
             try
             {
-                _logger.LogInformation($"Geting all values");
+                _logger.LogInformation($"Getting all values");
                 var values = await _valuesService.GetValues();
 
                 return Ok(values);
