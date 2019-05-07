@@ -31,7 +31,7 @@ namespace Sage.ServiceFabric.Slcs
                     var vaultName = partialConfig["AzureKeyVault:VaultName"];
                     var vaultUrl = $"https://{vaultName}.vault.azure.net/";
 
-                    if (!string.IsNullOrWhiteSpace(vaultName))                    
+                    if (!string.IsNullOrWhiteSpace(clientSecret))                    
                         config.AddAzureKeyVault(vaultUrl, clientId, clientSecret);
                     
                 })
