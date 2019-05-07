@@ -25,12 +25,13 @@ namespace Sage.ServiceFabric.Slcs
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     var builtConfig = config.Build();
+                    
+                    var clientId = builtConfig["Slcs:AzureKeyVault:ClientId"];
+                    var clientSecret = builtConfig["Slcs:AzureKeyVault:Secret"];
+                    var vaultName = builtConfig["Slcs:AzureKeyVault:VaultName"];
+                    var vaultUrl = $"https://{vaultName}.vault.azure.net/";
 
-                    var vault = builtConfig["Slcs:AzureKeyVault:Url"];
-                    var clientId = builtConfig["Slcs:AzureKeyVault:ApplicationId"];
-                    var clientSecret = builtConfig["Slcs:AzureKeyVault:SecretKey"];
-
-                    config.AddAzureKeyVault(vault, clientId, clientSecret);
+                    config.AddAzureKeyVault(vaultUrl, clientId, clientSecret);
                 })
                 //.UseSerilog()
                 .UseStartup<Startup>();
