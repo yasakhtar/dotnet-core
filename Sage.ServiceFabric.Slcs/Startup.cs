@@ -31,7 +31,7 @@ namespace Sage.ServiceFabric.Slcs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Config.AppSettings>(Configuration.GetSection("Slcs:Settings"));
+            services.Configure<Config.AppSettings>(Configuration.GetSection("Slcs"));
 
             services.AddSlcs();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

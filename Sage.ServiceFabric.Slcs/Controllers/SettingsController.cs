@@ -16,15 +16,18 @@ namespace Sage.ServiceFabric.Slcs.Controllers
     public class SettingsController : ControllerBase
     {
         private readonly AppSettings appSettings;
+        private readonly IConfiguration configuration;
 
-        public SettingsController(IOptions<AppSettings> settings)
+        public SettingsController(IOptions<AppSettings> settings, IConfiguration configuration)
         {
             this.appSettings = settings.Value;
+            this.configuration = configuration;
         }
 
         [HttpGet]
         public async Task<ActionResult<AppSettings>> Get()
         {
+            var res = configuration["AzureKeyVaultSecret"];
             return Ok(appSettings);
         }
 

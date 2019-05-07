@@ -7,11 +7,9 @@ namespace Sage.ServiceFabric.Slcs.Config
 {
     public class AppSettings
     {
-        public string Setting1 { get; set; }
-        public string Setting2 { get; set; }
-        public string Setting3 { get; set; }
-        public string Setting4 { get; set; }
-        public string Setting5 { get; set; }
-        public NameValue Setting6 { get; set; }
+        public bool? SwaggerUIAuthorisation { get; set; }
+        public bool EnableSwagger { get; set; }
+        public string AzureKeyVaultSecret { get; set; }
+        public GeneralSettings Settings { get; set; }
     }
 }
