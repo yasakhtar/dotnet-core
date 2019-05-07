@@ -29,7 +29,7 @@ namespace Sage.ServiceFabric.Slcs.Controllers
         {
             try
             {
-                _logger.LogInformation($"Getting all values");
+                _logger.Information($"Getting all values 8");
                 var values = await _valuesService.GetValues();
 
                 return Ok(values);

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Sage.ServiceFabric.ServiceFabric.Core;
 using Sage.ServiceFabric.Slcs.Services;
 using Serilog;
+using Serilog.Enrichers.AspnetcoreHttpcontext;
 using Serilog.Events;
 using Serilog.Sinks.SumoLogic;
 
@@ -30,6 +31,8 @@ namespace Sage.ServiceFabric.Slcs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Config.AppSettings>(Configuration.GetSection("Slcs:Settings"));
+
             services.AddSlcs();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -37,7 +40,7 @@ namespace Sage.ServiceFabric.Slcs
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
         {
-            //ConfigureSerilog(loggerFactory, applicationLifetime);
+            ConfigureSerilog(loggerFactory, applicationLifetime);
 
             if (env.IsDevelopment())
             {
@@ -71,7 +74,7 @@ namespace Sage.ServiceFabric.Slcs
 
             loggerFactory.AddSerilog();
 
-            applicationLifetime.ApplicationStarted.Register(Log.CloseAndFlush);
+            applicationLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
         }
     }
 }

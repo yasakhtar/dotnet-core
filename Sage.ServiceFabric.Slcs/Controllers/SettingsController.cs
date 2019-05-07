@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Sage.ServiceFabric.Slcs.Config;
+using Sage.ServiceFabric.Slcs.Models;
+
+namespace Sage.ServiceFabric.Slcs.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SettingsController : ControllerBase
+    {
+        private readonly AppSettings appSettings;
+
+        public SettingsController(IOptions<AppSettings> settings)
+        {
+            this.appSettings = settings.Value;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<AppSettings>> Get()
+        {
+            return Ok(appSettings);
+        }
+
+    }
+}

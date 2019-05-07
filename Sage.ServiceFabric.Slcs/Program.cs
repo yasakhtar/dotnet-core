@@ -17,33 +17,12 @@ namespace Sage.ServiceFabric.Slcs
     {
         public static void Main(string[] args)
         {
-            var sumoUrl = @"https://endpoint2.collection.sumologic.com/receiver/v1/http/ZaVnC4dhaV3LWI_amXizPs4gb9vYI5KduDd0qCNPjkvgSymJlIu7NeQ7cg3sFSNl79QTEi_cvMnf6vVzUzbHc9S2oe8AMfMaR8xvupIDDnWFsicu3atcBQ==";
-
-            // Create the logger
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .MinimumLevel.Debug()
-                .WriteTo.ColoredConsole(
-                    LogEventLevel.Information,
-                    "{NewLine}{Timestamp:HH:mm:ss} [{Level}] ({CorrelationToken}) {Message}{NewLine}{Exception}")
-                .WriteTo.Debug(LogEventLevel.Information,
-                    "{NewLine}{Timestamp:HH:mm:ss} [{Level}] ({CorrelationToken}) {Message}{NewLine}{Exception}")
-                .WriteTo.SumoLogic(sumoUrl, restrictedToMinimumLevel: LogEventLevel.Information, sourceName: "Dev-serilog-test" )
-                .CreateLogger();
-
-            try
-            {
-                CreateWebHostBuilder(args).Build().Run();
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseSerilog()
+                //.UseSerilog()
                 .UseStartup<Startup>();
     }
 }
