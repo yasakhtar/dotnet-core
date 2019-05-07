@@ -25,16 +25,18 @@ namespace Sage.ServiceFabric.Slcs
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((context, config) =>
+                .ConfigureAppConfiguration((context, configBuilder) =>
                 {
-                    var partialConfig = config.Build();
+                    var config = configBuilder.Build();
 
-                    var vaultUrl = partialConfig["AzureKeyVault:Url"];
+                    var azureKeyVaultUrl = config["AzureKeyVaultUrl"];
+                    if (string.IsNullOrWhiteSpace(azureKeyVaultUrl))
+                        return;
+
                     var tokenProvider = new AzureServiceTokenProvider();
                     var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
 
-                    config.AddAzureKeyVault(vaultUrl, kvClient, new DefaultKeyVaultSecretManager());
-
+                    configBuilder.AddAzureKeyVault(azureKeyVaultUrl, kvClient, new DefaultKeyVaultSecretManager());
                 })
                 //.UseSerilog()
                 .UseStartup<Startup>();
