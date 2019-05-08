@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Sage.ServiceFabric.Slcs.Config
 {
-    public class NameValue
+    public class SecretsConfig
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string SecretKey1 { get; set; }
+        public string SecretKey2 { get; set; }
+
     }
 }

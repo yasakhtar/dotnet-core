@@ -13,19 +13,19 @@ namespace Sage.ServiceFabric.Slcs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SettingsController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly AppSettings appSettings;
+        private readonly IOptions<ConfiguredUsers> configuredUsers;
 
-        public SettingsController(IOptions<AppSettings> settings, IOptions<CosmosSettings> cosmosSettings)
+        public UsersController(IOptions<ConfiguredUsers> configuredUsers)
         {
-            this.appSettings = settings.Value;
+            this.configuredUsers = configuredUsers;
         }
 
         [HttpGet]
-        public async Task<ActionResult<AppSettings>> Get()
+        public async Task<ActionResult<ConfiguredUsers>> Get()
         {
-            return Ok(appSettings);
+            return Ok(configuredUsers);
         }
 
     }

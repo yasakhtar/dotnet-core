@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/settings",
       "environmentVariables": {
-        "Slcs:Settings:Setting4": "Value from env var",
+        "Slcs:Settings:Setting3": "Value from env var",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

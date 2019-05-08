@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Sage.ServiceFabric.ServiceFabric.Core;
+using Sage.ServiceFabric.Slcs.Config;
 using Sage.ServiceFabric.Slcs.Services;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,9 @@ namespace Sage.ServiceFabric.Slcs
             services.AddTransient<IValuesService, ValuesService>();
             services.AddScoped<IValuesRepository, ValuesRepository>();
             services.AddScoped<CallContext>();
+            services.AddSingleton<IEncryptionService, EncryptionService>();
         }
+
         public static void Information(this ILogger logger,
             string message,
             [CallerMemberName] string memberName = "",

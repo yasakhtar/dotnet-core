@@ -27,6 +27,12 @@ namespace Sage.ServiceFabric.Slcs
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, configBuilder) =>
                 {
+                    //
+                    // An example of using a Config Provider that needs configured before we can use it!
+                    //
+                    // Adding AzureKeyVault as as ConfigProvider. We read the AzureKeyVaultUrl from config, if we haven't
+                    // configured one then just proceed. An alternative would be to not use KeyVault when Environment is Development.
+                    //
                     var config = configBuilder.Build();
 
                     var azureKeyVaultUrl = config["AzureKeyVaultUrl"];
@@ -35,7 +41,7 @@ namespace Sage.ServiceFabric.Slcs
 
                     var tokenProvider = new AzureServiceTokenProvider();
                     var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
-
+                    
                     configBuilder.AddAzureKeyVault(azureKeyVaultUrl, kvClient, new DefaultKeyVaultSecretManager());
                 })
                 //.UseSerilog()

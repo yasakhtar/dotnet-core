@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sage.ServiceFabric.ServiceFabric.Core;
+using Sage.ServiceFabric.Slcs.Config;
 using Sage.ServiceFabric.Slcs.Services;
 using Serilog;
 using Serilog.Enrichers.AspnetcoreHttpcontext;
@@ -31,7 +32,18 @@ namespace Sage.ServiceFabric.Slcs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Config.AppSettings>(Configuration.GetSection("Slcs"));
+            // 
+            // Configuring POCO objects with sections of our overall configuration.  
+            // We can then inject an IOptions<T> into classes that need to use our config.
+            // 
+            // As shown, could have one object representing the overall config (similar to AppSettings in SLCS) or multiple smaller config classes.
+            //
+            services.Configure<AppSettings>(Configuration.GetSection("Slcs"));
+            services.Configure<CosmosSettings>(Configuration.GetSection("Cosmos"));
+            services.Configure<ConfiguredUsers>(Configuration.GetSection("Slcs:Users"));
+            services.Configure<EncryptionConfig>(Configuration.GetSection("Encryption"));
+            services.Configure<SecretsConfig>(Configuration.GetSection("Secrets"));
+            services.AddSingleton<IConfigureOptions<DecryptedSecrets>, DecryptedSecretsConfig>();
 
             services.AddSlcs();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
